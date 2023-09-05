@@ -267,6 +267,10 @@ app_bt_gatt_connection_up( wiced_bt_gatt_connection_status_t *p_status )
     /* Check if the connected device is Peripheral */
     /* if are_we_central flag is set we are in central role for that connection*/
     peer_index = app_bt_get_peer_index(p_status->conn_id);
+    if(peer_index >= 4){
+        printf("This app only supports upto 4 connections (including Central device)\n");
+        return WICED_BT_GATT_SUCCESS;
+    }
     if(peer_info[peer_index].are_we_central)
     {
 
@@ -367,6 +371,11 @@ app_bt_gatt_connection_down(wiced_bt_gatt_connection_status_t *p_status)
 
     peer_index = app_bt_get_peer_index(p_status->conn_id);
 
+    if(peer_index >= 4){
+        printf("This app only supports upto 4 connections (including Central device)\n");
+        return WICED_BT_GATT_SUCCESS;
+    }
+
     /*If peripheral has disconnected, decrement the number of peripheral connection count */
     if(peer_info[peer_index].are_we_central)
     {
@@ -384,6 +393,7 @@ app_bt_gatt_connection_down(wiced_bt_gatt_connection_status_t *p_status)
     }
     else
     {
+        central_connid = 0;
         /* Start advertisement as central has disconnected*/
         result = wiced_bt_start_advertisements(BTM_BLE_ADVERT_UNDIRECTED_HIGH, 0, NULL);
 
@@ -398,7 +408,6 @@ app_bt_gatt_connection_down(wiced_bt_gatt_connection_status_t *p_status)
 
     /* Reset the stored connection IDs and flag */
     current_conn_id = 0;
-    central_connid = 0;
     hs_discovery_data.service_found = false;
 
     return WICED_BT_GATT_SUCCESS;
@@ -508,6 +517,10 @@ app_bt_gatt_req_handler(wiced_bt_gatt_attribute_request_t *p_attr_req)
         case GATT_HANDLE_VALUE_CONF:
             {
                 peer_index = app_bt_get_peer_index(p_attr_req->conn_id);
+                if(peer_index >= 4){
+                    printf("This app only supports upto 4 connections (including Central device)\n");
+                    return WICED_BT_GATT_SUCCESS;
+                }
                 printf("Indication Confirmation received \n");
                 peer_info[peer_index].flag_indication_sent = FALSE;
             }
@@ -1028,6 +1041,10 @@ app_bt_gatt_operation_cplt_handler(wiced_bt_gatt_operation_complete_t *p_operati
             // printf("in op complete read handle, status = %x \n", p_operation_cplt->status);
             /* Get the index of peer data stored to set flags to track completion of read */
             peer_index = app_bt_get_peer_index(p_operation_cplt->conn_id);
+            if(peer_index >= 4){
+                printf("This app only supports upto 4 connections (including Central device)\n");
+                return WICED_BT_GATT_SUCCESS;
+            }
             /* Check the handle from which the read response is received. There are three readable attributes: Notify, CCCD and Blink characteristic */
             if((p_operation_cplt->status == WICED_BT_GATT_SUCCESS) && (p_operation_cplt->response_data.handle == hs_discovery_data.hs_char_val_notify_handle))
             {
@@ -1331,6 +1348,11 @@ void app_bt_read_peer_attributes(uint16_t conn_id)
     // printf("read attribute peer\n");
     peer_index = app_bt_get_peer_index(conn_id);
 
+    if(peer_index >= 4){
+        printf("This app only supports upto 4 connections (including Central device)\n");
+        return;
+    }
+
     /* Use the flags to check if read request needs to be sent to GATT Server */
     if(!peer_info[peer_index].is_read_notify_char_cplt)
     {
@@ -1436,7 +1458,8 @@ void app_bt_update_gatt_db( uint8_t att_val_id, uint16_t conn_id, uint16_t handl
                 if(handle == app_gatt_db_ext_attr_tbl[i].handle)
                 {
                     // printf("app_gatt_db_ext_attr_tbl->p_data[0] = %d\n", app_gatt_db_ext_attr_tbl[i].p_data[0]);
-                    if(app_gatt_db_ext_attr_tbl[i].p_data[0] <= 0x09 && app_gatt_db_ext_attr_tbl[i].p_data[0] > 0x0)
+                if((app_gatt_db_ext_attr_tbl[i].p_data[0] <= 0x09 && app_gatt_db_ext_attr_tbl[i].p_data[0] > 0x0) && (peripheral_conn_id != 0x0))
+                {
                     gatt_status = wiced_bt_gatt_client_send_write(peripheral_conn_id , GATT_REQ_WRITE, &app_write_blink, app_gatt_db_ext_attr_tbl[i].p_data, NULL);
                     if(WICED_BT_GATT_SUCCESS != gatt_status)
                     {
@@ -1446,6 +1469,11 @@ void app_bt_update_gatt_db( uint8_t att_val_id, uint16_t conn_id, uint16_t handl
                     {
                         printf("write success blink\n");
                     }
+                }
+                else
+                {
+                    printf("Write value entered is not in range or Hello Sensor device is not yet connected\n");
+                }
                     break;
                 }
             }

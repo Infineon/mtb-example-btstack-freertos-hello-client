@@ -6,13 +6,13 @@ This Code Example requires [Bluetooth&reg; LE Hello Sensor](https://github.com/I
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-btstack-freertos-hello-client)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzUxOTkiLCJTcGVjIE51bWJlciI6IjAwMi0zNTE5OSIsIkRvYyBUaXRsZSI6IkJsdWV0b290aCZyZWc7IExFIEhlbGxvIENsaWVudCIsInJpZCI6Im5oZWciLCJEb2MgdmVyc2lvbiI6IjEuMC4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJCVEFCTEUifQ==)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzUxOTkiLCJTcGVjIE51bWJlciI6IjAwMi0zNTE5OSIsIkRvYyBUaXRsZSI6IkJsdWV0b290aCZyZWc7IExFIEhlbGxvIENsaWVudCIsInJpZCI6Im5oZWciLCJEb2MgdmVyc2lvbiI6IjEuMS4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJCVEFCTEUifQ==)
 
 ## Requirements
 
 - [ModusToolbox&trade; software](https://www.infineon.com/modustoolbox) v3.0 or later (tested with v3.0)
 - Board support package (BSP) minimum required version for :
-   - CYW920829M2EVK-02 : v1.0.0.Beta4
+   - CYW920829M2EVK-02 : v1.0.1
    - Other BSPs : 4.0.0
 - Programming language: C
 - Associated parts:[PSoC&trade; 6 MCU](https://www.infineon.com/cms/en/product/microcontroller/32-bit-psoc-arm-cortex-microcontroller/psoc-6-32-bit-arm-cortex-m4-mcu/) with [AIROC™ CYW43xxx Wi-Fi & Bluetooth® combo chips](https://www.infineon.com/cms/en/product/wireless-connectivity/airoc-wi-fi-plus-bluetooth-combos/) and [AIROC™ CYW20829 Bluetooth® LE SoC](https://www.infineon.com/cms/en/product/promopages/airoc20829)
@@ -24,8 +24,8 @@ This Code Example requires [Bluetooth&reg; LE Hello Sensor](https://github.com/I
 
 ## Supported kits (make variable 'TARGET')
 
-- AIROC&trade; CYW20829 Bluetooth&reg; LE evaluation kit (`CYW920829M2EVK-02` ) – Default value of `TARGET`
-- [PSoC&trade; 62S2 Wi-Fi Bluetooth&reg; pioneer kit](https://www.infineon.com/CY8CKIT-062S2-43012)
+- [AIROC&trade; CYW20829 Bluetooth&reg; LE evaluation kit](https://www.infineon.com/CYW920829M2EVK-02) (`CYW920829M2EVK-02`) – Default value of `TARGET`
+- [PSoC&trade; 62S2 Wi-Fi Bluetooth&reg; pioneer kit](https://www.infineon.com/CY8CKIT-062S2-43012) (`CY8CKIT-062S2-43012`)
 
 
 ## Hardware setup
@@ -192,7 +192,7 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
 
 7. Press the user button and connect with more Hello Sensor devices, one at a time. This example shows connection with up to three Hello Sensor devices.
 
-7. Hello Client advertises by default. Using Smart phone installed with AIROC&trade; Bluetooth&reg; Connect, scan for 'Hello Client' and issue connection from the phone.
+7. After Hello Client is connected to at least one Hello Sensor it starts advertisement by default if button press is not detected. Using Smart phone installed with AIROC&trade; Bluetooth&reg; Connect, scan for 'Hello Client' and issue connection from the phone.
 
 8. After connection and service discovery is complete, you will see three GATT Services. Each service corresponds to Hello Sensors connected to the Hello Client. You can issue 'Read' from AIROC&trade; Bluetooth&reg; Connect app to the Device name characteristic of first service to know the Device name of first Hello Sensor connected. You can use the Device Name characteristic to identify rest of the Hello Sensors connected.
 
@@ -202,7 +202,7 @@ For a list of supported IDEs and more details, see the "Exporting to IDEs" secti
 
 11. You can use the write characteristic to blink the LED on Hello Sensor through phone. Choose the write characteristic from first service and write a value from 1 - 9 to blink LED on the first Hello Sensor.
 
-12. To forget a bonded device, press and hold the user button for more than 10 seconds and then release. Ensure that the device is not in a connected state before performing this. User LED on the kit blinks for 10 seconds to indicate the duration of button press.
+12. To forget a bonded device, press and hold the user button for more than 10 seconds and then release it. Ensure that the device is not in a connected state before performing this. User LED on the kit will be constantly turned ON for first 5 seconds and it will start blinking for 5 more seconds to indicate that the device is entering new mode.
 
 
 ## Debugging
@@ -239,7 +239,7 @@ The Hello Client device can connect to any central. Advertisements start wheneve
 
 The user button on the board is configured to trigger an interrupt on the falling edge. The user button has two functions based on the duration of button press by the user. An on-board LED indicates the type of button press.
 1. Short button press: Press and release the button quickly to start high duty scanning.
-2. Button press for 10 seconds: Press and hold the button for 10 seconds to erase the bond information from flash memory of the device. The on-board LED starts blinking for 5 more seconds to indicate when to release the button to enter this mode.
+2. Button press for 10 seconds: Press and hold the button for 10 seconds to erase the bond information from flash memory of the device. The onboard LED will be constantly turned ON for first 5 seconds and it will start blinking for 5 more seconds to indicate that the device is entering new mode.
 
 **Note:** The device has to be disconnected from the peer client device before erasing the bond information from flash memory.
 
@@ -295,6 +295,7 @@ Document Title: *CE235199 – Bluetooth&reg; LE Hello Client*
 | Version | Description of change |
 | ------- | --------------------- |
 | 1.0.0   | New code example      |
+| 1.1.0   | Code example updated  |
 
 -------------------------------------------------------------------------------
 

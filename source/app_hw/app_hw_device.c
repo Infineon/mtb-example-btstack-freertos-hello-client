@@ -189,7 +189,8 @@ void app_bt_interrupt_config(void)
                              CYBSP_BTN_OFF);
     if(CY_RSLT_SUCCESS != result)
     {
-        printf("Button GPIO initialization failed, result = %ld\n", result);
+        printf("Button GPIO initialization failed");
+        CY_ASSERT(0);
     }
 
     /* Configure GPIO interrupt */
@@ -414,7 +415,8 @@ void button_task(void *arg)
             {
                 printf("Button pressed for more than 10 seconds,"
                        "attempting to clear bond info\n");
-
+                if(0 == peer_info->conn_id)
+                {
                 /* Reset Kv-store library, this will clear the flash */
                 rslt = mtb_kvstore_reset(&kvstore_obj);
                 if(CY_RSLT_SUCCESS == rslt)
@@ -429,6 +431,12 @@ void button_task(void *arg)
                 /* Clear peer link keys and identity keys structure */
                 memset(&bond_info, 0, sizeof(bond_info));
                 memset(&identity_keys, 0, sizeof(identity_keys));
+                }
+                else
+                {
+                    printf("Existing connection present, "
+                           "Can't reset bonding information\n");
+                }
             }
             xTimerStop(ms_timer_btn, 0);
         }

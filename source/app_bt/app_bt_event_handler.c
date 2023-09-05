@@ -268,6 +268,10 @@ app_bt_management_callback(wiced_bt_management_evt_t event, wiced_bt_management_
 
         case BTM_ENCRYPTION_STATUS_EVT:
             peer_index = app_bt_get_peer_index(current_conn_id);
+            if(peer_index >= 4){
+                printf("This app only supports upto 4 connections (including Central device)\n");
+                return WICED_BT_SUCCESS;
+            }
             p_status = &p_event_data->encryption_status;
             printf("Encryption status changed, Encryption Status: %d , BDA:", p_status->result);
             print_bd_address(p_status->bd_addr);
