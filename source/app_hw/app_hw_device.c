@@ -133,8 +133,10 @@ void app_bt_timeout_ms_btn(TimerHandle_t timer_handle)
     timer_count_ms++;
     if((APP_BTN_PRESS_5S == (timer_count_ms - btn_press_start)) && (is_btn_pressed))
     {
+        #if (CY_TARGET_BOARD!=APP_CYW989829M2EVB_01)
         /* Start LED blink indicate for 5 more seconds */
         cyhal_gpio_write(CYBSP_USER_LED2 , CYBSP_LED_STATE_ON);
+        #endif
         xTimerStart(ms_timer_led_indicate, 0);
     }
 }
@@ -156,12 +158,15 @@ void app_bt_timeout_ms_btn(TimerHandle_t timer_handle)
 void app_bt_timeout_led_indicate(TimerHandle_t timer_handle)
 {
     led_indicate_count++;
+	#if (CY_TARGET_BOARD!=APP_CYW989829M2EVB_01)
     cyhal_gpio_toggle(CYBSP_USER_LED2);
-
+	#endif
     if(led_indicate_count == MAXIMUM_LED_BLINK_COUNT)
     {
         xTimerStop(ms_timer_led_indicate, 0);
+		#if (CY_TARGET_BOARD!=APP_CYW989829M2EVB_01)
         cyhal_gpio_write(CYBSP_USER_LED2 , CYBSP_LED_STATE_OFF);
+		#endif
         led_indicate_count = 0;
     }
 }
@@ -244,9 +249,10 @@ void app_bt_hw_init()
 {
     cyhal_gpio_init(CYBSP_USER_LED1 , CYHAL_GPIO_DIR_OUTPUT,
                     CYHAL_GPIO_DRIVE_STRONG, CYBSP_LED_STATE_OFF);
+	#if (CY_TARGET_BOARD!=APP_CYW989829M2EVB_01)
     cyhal_gpio_init(CYBSP_USER_LED2 , CYHAL_GPIO_DIR_OUTPUT,
                     CYHAL_GPIO_DRIVE_STRONG, CYBSP_LED_STATE_OFF);
-
+	#endif
     app_bt_interrupt_config();
 
     /* Starting a log print timer for button press duration
@@ -319,7 +325,9 @@ void button_task(void *arg)
 
             /* Turn ON the LED, it is decided based on time and button state
              * whether to turn it off, blink or keep it ON */
+			#if (CY_TARGET_BOARD!=APP_CYW989829M2EVB_01)
             cyhal_gpio_write(CYBSP_USER_LED2 , CYBSP_LED_STATE_ON);
+			#endif
         }
 
         /* Check if button is released */
@@ -327,8 +335,9 @@ void button_task(void *arg)
         {
             /* Update the flag to indicate button is released */
             is_btn_pressed = FALSE;
+			#if (CY_TARGET_BOARD!=APP_CYW989829M2EVB_01)
             cyhal_gpio_write(CYBSP_USER_LED2 , CYBSP_LED_STATE_OFF);
-
+			#endif
             /* Calculate the time duration for which the button was pressed */
             btn_press_duration = timer_count_ms - btn_press_start;
             /* Check if button press is short and start scanning*/
@@ -337,8 +346,9 @@ void button_task(void *arg)
             {
                 printf("Short button press is detected \n");
                 /* Turn off the LED since it is a short button press */
+                #if (CY_TARGET_BOARD!=APP_CYW989829M2EVB_01)
                 cyhal_gpio_write(CYBSP_USER_LED2 , CYBSP_LED_STATE_OFF);
-
+                #endif
                 /* Stop the advertisements before starting to scan */
                 if(BTM_BLE_ADVERT_OFF != wiced_bt_ble_get_current_advert_mode())
                 {
@@ -408,7 +418,9 @@ void button_task(void *arg)
                 /* Reset the number of blinks to 0 */
                 led_indicate_count = 0;
                 /* Turn off the LED */
+                #if (CY_TARGET_BOARD!=APP_CYW989829M2EVB_01)
                 cyhal_gpio_write(CYBSP_USER_LED2 , CYBSP_LED_STATE_OFF);
+                #endif
             }
             /* Check if button is pressed for 10 seconds and delete the bond info from NVRAM */
             else if(btn_press_duration > APP_BTN_PRESS_10S)
