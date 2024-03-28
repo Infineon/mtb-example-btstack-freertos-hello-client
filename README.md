@@ -6,7 +6,7 @@ This Code Example requires [Bluetooth&reg; LE Hello Sensor](https://github.com/I
 
 [View this README on GitHub.](https://github.com/Infineon/mtb-example-btstack-freertos-hello-client)
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzUxOTkiLCJTcGVjIE51bWJlciI6IjAwMi0zNTE5OSIsIkRvYyBUaXRsZSI6IkJsdWV0b290aCZyZWc7IExFIEhlbGxvIENsaWVudCIsInJpZCI6Im5oZWciLCJEb2MgdmVyc2lvbiI6IjEuMi4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJCVEFCTEUifQ==)
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzUxOTkiLCJTcGVjIE51bWJlciI6IjAwMi0zNTE5OSIsIkRvYyBUaXRsZSI6IkJsdWV0b290aCZyZWc7IExFIEhlbGxvIENsaWVudCIsInJpZCI6Im5oZWciLCJEb2MgdmVyc2lvbiI6IjEuMy4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJCVEFCTEUifQ==)
 
 ## Requirements
 
@@ -215,7 +215,7 @@ For more details, see the [ModusToolbox&trade; tools package user guide](https:/
 11. You can use the write characteristic to blink the LED on Hello Sensor through phone. Choose the write characteristic from first service and write a value from 1 - 9 to blink LED on the first Hello Sensor.
 
 12. To forget a bonded device, press and hold the user button for more than 10 seconds and then release it. Ensure that the device is not in a connected state before performing this. User LED on the kit will be constantly turned ON for first 5 seconds and it will start blinking for 5 more seconds to indicate that the device is entering new mode.
-
+Note:The CYW989829M2EVB-01 doesn't have the LED2, please ignore the blinking.
 
 ## Debugging
 
@@ -268,7 +268,7 @@ The user button on the board is configured to trigger an interrupt on the fallin
 1. Short button press: Press and release the button quickly to start high duty scanning.
 2. Button press for 10 seconds: Press and hold the button for 10 seconds to erase the bond information from flash memory of the device. The onboard LED will be constantly turned ON for first 5 seconds and it will start blinking for 5 more seconds to indicate that the device is entering new mode.
 
-**Note:** The device has to be disconnected from the peer client device before erasing the bond information from flash memory.
+**Note:** The device has to be disconnected from the peer client device before erasing the bond information from flash memory. The CYW989829M2EVB-01 doesn't have the LED2, please ignore the blinking.
 
 
 ## Resources and settings
@@ -293,7 +293,7 @@ This section explains the ModusToolbox&trade; software resources and their confi
 | GPIO (HAL)    | CYBSP_USER_LED1         | This LED will blink the number of times as written by the peer client device |
 | GPIO (HAL)    | CYBSP_USER_LED2         | This LED serves as an indication for button press of 10 second duration |
 | GPIO (HAL)    | CYBSP_USER_BTN         | Used to start scanning or erase bond data |
-
+Note:The CYW989829M2EVB-01 doesn't have the LED2, please ignore the blinking.
 <br>
 
 ## Related resources
@@ -322,7 +322,7 @@ Document Title: *CE235199 – Bluetooth&reg; LE Hello Client*
 | 1.0.0   | New code example      |
 | 1.1.0   | Code example updated  |
 | 1.2.0   | Add CYW989829M2EVB-01 support  |
-
+| 1.3.0   | Fix Some issue        |
 -------------------------------------------------------------------------------
 
 © Cypress Semiconductor Corporation, 2020-2023. This document is the property of Cypress Semiconductor Corporation, an Infineon Technologies company, and its affiliates ("Cypress").  This document, including any software or firmware included or referenced in this document ("Software"), is owned by Cypress under the intellectual property laws and treaties of the United States and other countries worldwide.  Cypress reserves all rights under such laws and treaties and does not, except as specifically stated in this paragraph, grant any license under its patents, copyrights, trademarks, or other intellectual property rights.  If the Software is not accompanied by a license agreement and you do not otherwise have a written agreement with Cypress governing the use of the Software, then Cypress hereby grants you a personal, non-exclusive, nontransferable license (without the right to sublicense) (1) under its copyright rights in the Software (a) for Software provided in source code form, to modify and reproduce the Software solely for use with Cypress hardware products, only internally within your organization, and (b) to distribute the Software in binary code form externally to end users (either directly or indirectly through resellers and distributors), solely for use on Cypress hardware product units, and (2) under those claims of Cypress's patents that are infringed by the Software (as provided by Cypress, unmodified) to make, use, distribute, and import the Software solely for use with Cypress hardware products.  Any other use, reproduction, modification, translation, or compilation of the Software is prohibited.

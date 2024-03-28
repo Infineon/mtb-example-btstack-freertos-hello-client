@@ -7,7 +7,7 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2018-2023, Cypress Semiconductor Corporation (an Infineon company)
+# Copyright 2018-2024, Cypress Semiconductor Corporation (an Infineon company)
 # SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -65,7 +65,6 @@ CONFIG=Debug
 VERBOSE=
 
 # Optionally enable app and Bluetooth protocol traces and route to BTSpy
-# Not applicable for CYW920829M2EVB-01
 ENABLE_SPY_TRACES = 0
 # Specify the flash region to be used as NVRAM for bond data storage
 USE_INTERNAL_FLASH = 0

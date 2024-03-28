@@ -7,7 +7,7 @@
 * Related Document: See README.md
 *
 *******************************************************************************
-* Copyright 2021-2023, Cypress Semiconductor Corporation (an Infineon company) or
+* Copyright 2021-2024, Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 *
 * This software, including source code, documentation and related
@@ -113,13 +113,13 @@ int main()
     }
     #endif //ENABLE_BT_SPY_LOG
 
-    printf("******************** "
+    printf("******************************************************"
            "BTSTACK FreeRTOS Example "
-           "************************\n");
+           "******************************************************\n");
 
-    printf("****************** "
+    printf("******************************************************"
            "Hello Client Application Start "
-           "********************\n");
+           "******************************************************\n");
 
     /* Configure platform specific settings for the BT device */
     cybt_platform_config_init(&cybsp_bt_platform_cfg);
