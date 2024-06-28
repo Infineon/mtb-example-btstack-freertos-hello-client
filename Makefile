@@ -39,7 +39,7 @@ MTB_TYPE=COMBINED
 # To change the target, use the Library manager ('make modlibs' from command line).
 # If TARGET is manually edited, ensure TARGET_<BSP>.mtb with a valid URL exists
 # in the application, and run 'make getlibs' to fetch BSP contents.
-TARGET=CY8CKIT-062S2-43012
+TARGET=CYW920829M2EVK-02
 
 # Name of application (used to derive name of final linked file).
 APPNAME=mtb-example-btstack-freertos-hello-client
@@ -76,6 +76,7 @@ ENABLE_SPY_TRACES = 0
 USE_INTERNAL_FLASH = 1
 endif
 
+#add airoc-hci-transport from library manager before enabling
 ifeq ($(ENABLE_SPY_TRACES),1)
 DEFINES+=ENABLE_BT_SPY_LOG DEBUG_UART_BAUDRATE=3000000
 endif
