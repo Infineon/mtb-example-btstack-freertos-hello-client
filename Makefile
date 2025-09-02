@@ -7,7 +7,7 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2018-2024, Cypress Semiconductor Corporation (an Infineon company)
+# Copyright 2018-2025, Cypress Semiconductor Corporation (an Infineon company)
 # SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -89,6 +89,9 @@ ifeq ($(USE_INTERNAL_FLASH),1)
 DEFINES+=USE_INTERNAL_FLASH
 endif
 
+ifeq ($(TARGET),APP_CYW989829M2EVB-01)
+DEFINES+= CYW89829_BLE
+endif
 ################################################################################
 # Advanced Configuration
 ################################################################################

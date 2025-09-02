@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * File Name: app_bt_gatt_handler.c
  *
@@ -9,7 +8,7 @@
  *
  *
  *******************************************************************************
- * Copyright 2021-2024, Cypress Semiconductor Corporation (an Infineon company) or
+ * Copyright 2021-2025, Cypress Semiconductor Corporation (an Infineon company) or
  * an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
  *
  * This software, including source code, documentation and related
@@ -105,6 +104,16 @@ static uint8_t central_connid;
 
 /* Track the number of peripheral connections */
 uint8_t num_peripherals;
+
+wiced_bt_ble_pref_conn_params_t p_conn_params =
+{
+    .conn_interval_min = CY_BT_CONN_MIN_INTERVAL,     /**< minimum connection interval */
+    .conn_interval_max = CY_BT_CONN_MAX_INTERVAL,        /**< maximum connection interval */
+    .conn_latency = CY_BT_CONN_LATENCY,             /**< connection latency */
+    .conn_supervision_timeout = CY_BT_CONN_SUPERVISION_TIMEOUT, /**< connection supervision timeout */
+    .min_ce_length = 0,            /**< minimum connection events */
+    .max_ce_length = 0,
+};
 /*******************************************************************************
  * Function Definitions
  ******************************************************************************/
@@ -297,9 +306,7 @@ app_bt_gatt_connection_up( wiced_bt_gatt_connection_status_t *p_status )
         num_peripherals++;
 
         /* Send connection parameter update request to peripheral */
-        if(!wiced_bt_l2cap_update_ble_conn_params(p_status->bd_addr,CY_BT_CONN_MIN_INTERVAL,
-                                                 CY_BT_CONN_MAX_INTERVAL, CY_BT_CONN_MIN_INTERVAL,
-                                                 CY_BT_CONN_SUPERVISION_TIMEOUT))
+        if(!wiced_bt_l2cap_update_ble_conn_params(p_status->bd_addr,&p_conn_params))
         {
             printf("Failed to Send Connection update parameter request \r\n");
         }
